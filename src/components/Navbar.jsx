@@ -19,7 +19,11 @@ function Navbar({ theme, toggleTheme }) {
     };
     updateName();
     window.addEventListener("storage", updateName);
-    return () => window.removeEventListener("storage", updateName);
+    window.addEventListener("userChanged", updateName);
+    return () => {
+      window.removeEventListener("storage", updateName);
+      window.removeEventListener("userChanged", updateName);
+    };
   }, []);
 
   const scrollToSearch = () => {

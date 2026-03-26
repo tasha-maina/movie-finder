@@ -58,7 +58,15 @@ function App() {
   useEffect(() => {
     fetchMovies("Avatar", 1, true);
     loadCategories();
-  }, []);
+
+    const onUserChanged = () => {
+      fetchMovies(currentQuery, 1, true);
+      loadCategories();
+    };
+
+    window.addEventListener("userChanged", onUserChanged);
+    return () => window.removeEventListener("userChanged", onUserChanged);
+  }, [currentQuery]);
 
   const loadCategories = async () => {
     const categoryQueries = {
